@@ -181,7 +181,7 @@ def load():
     
     # ranking 
     rel_songs = ranking_function_w2v(stem_words(query), song_info)
-    return render_template('index.html', songs=rel_songs)
+    return render_template('index.html', songs=rel_songs.iloc[:50])
 
 if __name__ == "__main__":
     app.run(debug=True)

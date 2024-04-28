@@ -7,11 +7,12 @@
   </head>
   <body>
     <h1>Playlist!</h1>
+    <a href="/">Back</a> 
     <div id="outputDiv">
     {% for index, row in songs.iterrows() %}
       <div class="song">
-        <p> {{ row["track_name"] }} </p>
-        <p> {{ row["track_artist"]}} </p>
+        <p>Song Title: {{ row["track_name"] }} </p>
+        <p>Artist: {{ row["track_artist"]}} </p>
       </div>
     {% endfor %}
 

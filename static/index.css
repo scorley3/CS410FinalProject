@@ -1,0 +1,18 @@
+#inputDiv {
+    display: flex; 
+    align-items: center;
+}
+
+.song {
+    display: flex; 
+    flex-direction: row;
+    margin: 20px;
+    align-items: center;
+    border-color: black;
+    border-radius: 5px;
+    border-style: solid;
+}
+
+p {
+    margin: 10px; 
+}

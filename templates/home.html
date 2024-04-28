@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Playlist Generator</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+  </head>
+  <body>
+    <h1>Playlist Generator</h1>
+    <div id="inputDiv">
+      <form method="GET" action="/generate">
+        <input type="text" name="phrase" />
+        <input type="submit" value="Generate Playlist" />
+      </form>
+    </div>
+  </body>
+</html>

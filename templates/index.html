@@ -3,13 +3,16 @@
   <head>
     <title>Playlist Generator</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
   </head>
   <body>
     <h1>Playlist!</h1>
     <div id="outputDiv">
-    {% for song in songs %}
-        <p> {% song.title %} </p>
+    {% for index, row in songs.iterrows() %}
+      <div class="song">
+        <p> {{ row["track_name"] }} </p>
+        <p> {{ row["track_artist"]}} </p>
+      </div>
     {% endfor %}
 
     </div>

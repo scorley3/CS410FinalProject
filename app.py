@@ -202,7 +202,6 @@ def home():
 def load(): 
     query = request.args.get("phrase")
     
-    render_template("loading.html")
     # code to get query word2vec rankings
     rel_songs = generate_playlists(query)
     

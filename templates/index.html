@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
   </head>
   <body>
-    <h1>Playlist!</h1>
+    <h1>Playlist for "{{query}}"!</h1>
     <a href="/">Back</a> 
     <div id="outputDiv">
     {% for index, row in songs.iterrows() %}

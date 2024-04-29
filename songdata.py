@@ -122,3 +122,62 @@ def parse_text(df):
 
 song_info = parse_text(song_info)
 print(song_info)
+
+
+# import necessary libraries
+import tensorflow as tf
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+def process_emotions(mood):
+  if mood == "joy":
+    return "Happy"
+  elif mood == "sadness" or  mood == "fear":
+    return "Sad"
+  elif mood == "anger" or mood == "surprise":
+    return "Energetic"
+  elif mood == "love":
+    return "Calm"
+
+# parse the csv file to split the sentence and its corresponding mood
+sentence_moods = pd.read_csv("sentence_mood.txt")
+
+split_data = sentence_moods["words"].str.split(';', expand=True)
+if len(split_data.columns) == 2:
+  sentence_moods[['sentence', 'emotion']] = split_data
+
+# redefine emotions to the defined ones
+sentence_moods['emotion'] = sentence_moods['emotion'].apply(process_emotions)
+# app.register_blueprint(home_blueprint)
+
+# define texts and labels to train model
+texts = list(sentence_moods["sentence"])
+labels = list(sentence_moods["emotion"])
+
+# tokenize text data
+tokenizer = Tokenizer()
+tokenizer.fit_on_texts(texts)
+
+# define numerical sequence
+sequences = tokenizer.texts_to_sequences(texts)
+
+# pad sequences to ensure equal length for all sequences
+max_length = max([len(seq) for seq in sequences])
+updated_sequences = np.array(pad_sequences(sequences, maxlen=max_length, padding='post'))
+
+# convert labels to numerical representations - 0 to 3 (for the four moods)
+label_indices = np.array([labels.index(label) for label in labels])
+
+
+# define model architecture
+mood_model = tf.keras.Sequential([
+    tf.keras.layers.Embedding(input_dim=len(tokenizer.word_index) + 1, output_dim=16, input_length=max_length),
+    tf.keras.layers.GlobalAveragePooling1D(),
+    tf.keras.layers.Dense(4, activation='softmax')
+])
+
+# compile the model
+mood_model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+# train the model
+mood_model.fit(updated_sequences, label_indices, epochs=75, verbose=1)
